@@ -15,21 +15,25 @@ I successfully set up the Google OSS-Fuzz Docker infrastructure and compiled the
 **Command Executed:**
 ```bash
 python3 infra/helper.py run_fuzzer cups fuzz_ipp
+```
 Result: The libFuzzer successfully initialized and started discovering new paths.
 (See Task1_OSSFuzz.png for the live execution output).
 
-Task 2: Fuzzing CUPS with AFL++
+
+## Task 2: Fuzzing CUPS with AFL++
 To demonstrate manual instrumentation and system-level fuzzing, I compiled the OpenPrinting/cups repository from source using afl-clang-fast. I then created a seed corpus and initiated a fuzzing campaign on the network-based ipptool utility.
 
-Compilation:
-
+**Compilation:**
+```bash
 Bash
 CC=afl-clang-fast CXX=afl-clang-fast++ ./configure --disable-shared --disable-systemd
 make -j$(nproc)
-Fuzzer Execution:
-
+```
+**Fuzzer Execution:**
+```bash
 Bash
 AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES=1 afl-fuzz -i inputs/ -o outputs/ ./tools/ipptool ipp://127.0.0.1/ @@
+```
 Result: The AFL++ dashboard successfully launched, tracking map coverage, cycle progress, and execution speed.
 (See Task2_AFL_CUPS.png for the AFL++ dashboard output).
 
